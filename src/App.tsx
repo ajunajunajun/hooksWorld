@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
 
 type Props = {
   initial: number
@@ -11,16 +11,19 @@ export default ({ initial = 0 }: Props) => {
   const { context } = useContext(testContext)
 
   useEffect(() => {
-    alert(context)
+    console.log(context)
 
-    return () => alert('willunmount(副作用時にも発火)')
-  }, [count, context])
+    return () => console.log('willunmount(副作用時にも発火)')
+  }, [context])
+
+  const increment = useCallback(() => setCount(count => count + 1), [])
+  const decrement = useCallback(() => setCount(count => count - 1), [])
 
   return (
     <>
       {count}
-      <button onClick={() => setCount(count + 1)}>+1</button>
-      <button onClick={() => setCount(count - 1)}>+1</button>
+      <button onClick={increment}>+1</button>
+      <button onClick={decrement}>+1</button>
     </>
   )
 }
