@@ -3,7 +3,8 @@ import React, {
   useEffect,
   useContext,
   useCallback,
-  useMemo
+  useMemo,
+  useRef
 } from 'react'
 
 type Props = {
@@ -16,6 +17,7 @@ export default ({ initial = 0 }: Props) => {
   const [count, setCount] = useState(initial)
   const [num, setNum] = useState(1)
   const { context } = useContext(testContext)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     console.log(context)
@@ -31,6 +33,12 @@ export default ({ initial = 0 }: Props) => {
   const increment_num = useCallback(() => setNum(num => num + 1), [])
   const decrement_num = useCallback(() => setNum(dec_num_1), [dec_num_1])
 
+  const focus_input = useCallback(() => {
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
+
   return (
     <>
       {count}
@@ -38,6 +46,8 @@ export default ({ initial = 0 }: Props) => {
       <button onClick={decrement}>-{num}</button>
       <button onClick={increment_num}>{num + 1}づつ変わるようになるよ</button>
       <button onClick={decrement_num}>{num - 1}づつ変わるようになるよ</button>
+      <button onClick={focus_input}>focus_input</button>
+      <input ref={inputRef} type="text" />
     </>
   )
 }
