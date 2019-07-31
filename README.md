@@ -2,6 +2,8 @@ hooks 使うよ～
 
 # React Hooks
 
+前提として react の知識があるといいね！
+
 ## useState
 
 class でいう State を使える奴
@@ -70,6 +72,9 @@ console.log(context) // 'contextdayo~'
 
 ## useCallback
 
+PureComponent 的な奴
+関数を保存するよ！
+
 example1:
 
 ```
@@ -94,7 +99,21 @@ example では`1`を変数にしておいて、後から増加分を変えれる
 
 ## useMemo
 
-計算した結果をメモしとく関数
+↑ の useCallback とちょっと似てるよ！！
+useCallback は関数を保存するんだけど、  
+useMemo は関数の結果を保存するよ！前回と違ったら更新！
+
+example:
+
+```
+// めっちゃ高価な計算
+const dec_num_1 = useMemo(() => num - 1, [num])
+console.log(dec_num_1)
+```
+
+重たい計算があって、再レンダリングの度に繰り返したくないなら使おう！！
+こんな例文みたいな超簡単な計算じゃ使っちゃだめだよ！  
+useMemo 自体の処理の方が重いからね！
 
 ## useReducer
 
