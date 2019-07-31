@@ -2,8 +2,8 @@ hooks 使うよ～
 
 # React Hooks
 
-前提として react の知識があるといいね！
-Hooks は React の version16.8.0 (2019/02/06) で追加されたよ～
+前提として react の知識があるといいね！  
+Hooks は React の version16.8.0 (2019/02/06) で追加されたよ～  
 https://ja.reactjs.org/docs/hooks-reference.html#useref
 
 ## useState
@@ -19,7 +19,7 @@ return <button onClick={() => setCount(count + 1)}>+1</button>
 ```
 
 初期値`initial`で`count`として定義されて、  
-`setCount()`で値変更できる～便利
+`setCount()`で値変更できる～便利  
 boolean 型とか string 型とか、なんでも入るよ！
 
 ## useEffect
