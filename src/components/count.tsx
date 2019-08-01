@@ -9,6 +9,7 @@ import React, {
 } from 'react'
 
 import MyInput, { Handler } from './imperativehandle'
+import useJudgeCount from './customhook'
 
 type Props = {
   initial: number
@@ -21,6 +22,7 @@ const Count = ({ initial = 0 }: Props) => {
   const [num, setNum] = useState(1)
   const { context } = useContext(testContext)
   const inputRef = useRef({} as Handler)
+  const isZero = useJudgeCount(count)
 
   useEffect(() => {
     console.log(context)
@@ -35,13 +37,14 @@ const Count = ({ initial = 0 }: Props) => {
   // めっちゃ高価な計算
   const dec_num_1: number = useMemo(() => num - 1, [num])
 
-  const increment = useCallback(() => setCount(count => count + num), [num])
-  const decrement = useCallback(() => setCount(count => count - num), [num])
+  const increment = useCallback(() => setCount(c => c + num), [num])
+  const decrement = useCallback(() => setCount(c => c - num), [num])
   const increment_num = useCallback(() => setNum(num => num + 1), [])
   const decrement_num = useCallback(() => setNum(dec_num_1), [dec_num_1])
 
   return (
     <>
+      {isZero ? <p>0だよ</p> : <p>0じゃないよ </p>}
       {count}
       <button onClick={increment}>+{num}</button>
       <button onClick={decrement}>-{num}</button>
