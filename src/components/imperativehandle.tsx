@@ -11,7 +11,7 @@ const MyInput = (props: Props, ref: any) => {
   useImperativeHandle(ref, () => ({
     setWaaaai() {
       if (myInputRef && myInputRef.current) {
-        myInputRef.current.value = 'Waaaaai'
+        myInputRef.current.value = 'Waaaai'
       }
     }
   }))
