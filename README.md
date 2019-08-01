@@ -149,7 +149,6 @@ useEffect と useLayoutEffect を並べると先に useLayoutEffect が処理さ
 
 ## useCallback
 
-PureComponent 的な奴  
 関数を保存するよ！
 
 例 1:
