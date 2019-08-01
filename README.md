@@ -5,10 +5,16 @@ hooks 使うよ～
 前提として react の知識があるといいね！  
 Hooks は React の version16.8.0 (2019/02/06) で追加されたよ～
 新しい技術ってだけでわくわくするね！！  
-https://ja.reactjs.org/docs/hooks-reference.html  
+https://ja.reactjs.org/docs/hooks-reference.html
+
+Github に僕が書いた例文に使ってるソースコード置いておくから、良かったら見てね  
+typescript 使ってるから例文とちょっと違うと思うけど、処理は同じだよ  
+https://github.com/ajunajunajun/hooksWorld
+
+import 文とか省いていくよ！　　
 似た Hooks を並べてるから、場合によって使い分けてほしいな！
 
-import 文とか省いていくよ！
+## 目次
 
 ## useState
 
@@ -150,7 +156,7 @@ PureComponent 的な奴
 例 1:
 
 ```
-const increment = useCallback(() => setCount(count => count + 1), [])
+const increment = useCallback(() => setCount(c => c + 1), [])
 
 return <button onClick={increment}>+1</button>
 ```
@@ -161,7 +167,7 @@ return <button onClick={increment}>+1</button>
 例 2:
 
 ```
-const increment = useCallback(() => setCount(count => count + num), [num])
+const increment = useCallback(() => setCount(c => c + num), [num])
 
 return <button onClick={increment}>+1</button>
 ```
@@ -259,10 +265,46 @@ const inputRef = useRef()
 
 子供の MyInput で作った setWaaaai()を親で使える感じ、ふ～ん
 
-## custom hooks
+## Custom Hooks
 
-規則に合わせて自分で Hooks を作れるよ
+規則に合わせて自分で Hooks を作れるよ  
+規則って？
+
+- フックを呼び出すのはトップレベルのみ
+- フックを呼び出すのは React の関数内のみ
+- 名前が use で始まる
+
+このみっつ
+
+例:
+
+```
+const useJudgeCount = (count) => {
+  const [isZero, setBool] = useState(false)
+  useEffect(() => {
+    count === 0 ? setBool(true) : setBool(false)
+  }, [count])
+
+  return isZero
+}
+
+export default useJudgeCount
+```
+
+```
+const isZero = useJudgeCount(count)
+
+return
+  {isZero ? <p>0だよ</p> : <p>0じゃないよ </p>}
+```
+
+適当に count が 0 か否かを教えてくれる奴作ってみた！  
+色々機能ごとにファイル分けれるから綺麗に書けそう～
 
 ## useDebugValue
 
 ReactDevTools で CustomHooks のラベルを表示できるよ
+
+さっき作った useJudgeCount の中に  
+`useDebugValue(isZero)`  
+って書くだけで、ReactDevTools でその値が確認できる！！便利！！！
