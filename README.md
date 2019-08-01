@@ -15,14 +15,65 @@ class でいう State を使える奴
 example:
 
 ```
-const [count, setCount] = useState(initial)
+const [count, setCount] = useState(0)
 
 return <button onClick={() => setCount(count + 1)}>+1</button>
 ```
 
-初期値`initial`で`count`として定義されて、  
+初期値`0`で`count`として定義されて、  
 `setCount()`で値変更できる～便利  
-boolean 型とか string 型とか、なんでも入るよ！
+boolean 型とか string 型とか 配列とか、なんでも入るよ！
+
+## useReducer
+
+redux みたいに状態管理できる奴  
+これも useState みたく state が使える奴なんだけど、  
+コードが複雑になってきたらこっち使った方が分かりやすい！
+
+example:
+
+```
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 }
+    default:
+      return state
+  }
+}
+
+const ReducerComponent = () => {
+  const [state, dispatch] = useReducer(reducer, 0)
+  return
+    <button onClick={() => dispatch({ type: 'increment' })}>+1</button>
+}
+```
+
+`useReducer(reducer,0)`で、  
+state,dispatch を定義して使えるようにしてる！
+
+`dispatch({ type:'increment' })`とかで、  
+reducer 内の action.type を指定して状態を弄ることが出来る～
+
+redux もういらない？って思ったけど middleware 無いから非同期処理とかめんどそうだぁ
+
+## useContext
+
+class でいう <Context.Consumer> を使える奴
+
+example:
+
+```
+const testContext = React.createContext({ context: 'contextdayo~' })
+
+const ContextComponent = () => {
+    const { context } = useContext(testContext)
+
+    // 'contextdayo~'
+    return console.log(context)
+```
+
+`React.createContext`で作られた context を持ってこれるよ！
 
 ## useEffect
 
@@ -46,35 +97,42 @@ example2:
 useEffect(() => {
 console.log('a')
     return () => console.log('b')
-}, [count])
+}, [flag])
 ```
 
 第二引数の配列の中に値入れると lifecycle が少し変わる！
 
 `console.log('a')`の位置が componentDidMount,componentDidUpdate  
-`console.log('b')`の位置が componentWillUnMount
+`console.log('b')`の位置が componentWillUnMount(副作用時にも発火)
 
-第二引数の`count`の値の変化が発火条件で、
+第二引数の`flag`の値の変化が発火条件で、
 
-`count`変化 -> `('b')` -> `('a')` ってかんじ  
+`('a')` -> `flag`変化 -> `('b')` -> `('a')` ってかんじ  
 return 無しでも使えるよ！
 
-## useContext
+## useLayoutEffect
 
-class でいう <Context.Consumer> を使える奴
+↑ の useEffect とちょっと似てるよ！！
+
+useEffect は描画を止めないで処理するから、  
+一瞬処理できてない物が写る可能性あるんだけど、  
+useLayoutEffect は描画止めるからその心配が無いよ！
 
 example:
 
 ```
-export const testContext = React.createContext({ context: 'contextdayo~' })
+  useEffect(() => {
+    console.log('a')
 
-const { context } = useContext(testContext)
+    return () => console.log('b')
+  }, [flag])
 
-// 'contextdayo~'
-return console.log(context)
+  useLayoutEffect(() => {
+    console.log('c')
+  }, [flag])
 ```
 
-`React.createContext`で作られた context を持ってこれるよ！
+`('c')` -> `('a')` -> `flag`変化 -> `('b')` -> `('c')` -> `('a')` ってかんじ！！
 
 ## useCallback
 
@@ -155,50 +213,7 @@ return (
 再描画されないから、描画に関係ない事に便利そうだし  
 色んな使い道がありそうだ～
 
-## useReducer
-
-redux みたいに状態管理できる奴
-
-example:
-
-```
-const initialState = { count: 0 }
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'reset':
-      return initialState
-    case 'increment':
-      return { count: state.count + 1 }
-    case 'decrement':
-      return { count: state.count - 1 }
-    default:
-      return state
-  }
-}
-
-export const ReducerComponent = () => {
-  const [state, dispatch] = useReducer(reducer, initialState)
-  return (
-    <>
-      Count: {state.count}
-      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>
-      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
-      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
-    </>
-  )
-}
-```
-
-`useReducer(reducer,initialState)`で、  
-state,dispatch を定義して使えるようにしてる！
-
-`dispatch({ type:'reset' })`とかで、  
-reducer 内の action.type を指定して状態を弄ることが出来る～
-
 ## useImperativeHandle
-
-## useLayoutEffect
 
 ## useDebugValue
 
