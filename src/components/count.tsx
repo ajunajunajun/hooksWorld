@@ -4,7 +4,8 @@ import React, {
   useContext,
   useCallback,
   useMemo,
-  useRef
+  useRef,
+  useLayoutEffect
 } from 'react'
 
 type Props = {
@@ -24,6 +25,10 @@ export const Count = ({ initial = 0 }: Props) => {
 
     return () => console.log('willunmount(副作用時にも発火)')
   }, [context])
+
+  useLayoutEffect(() => {
+    console.log('描画とめるからこっち先処理')
+  }, [])
 
   // めっちゃ高価な計算
   const dec_num_1: number = useMemo(() => num - 1, [num])
