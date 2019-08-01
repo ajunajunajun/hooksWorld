@@ -14,8 +14,6 @@ https://github.com/ajunajunajun/hooksWorld
 import 文とか省いていくよ！　　
 似た Hooks を並べてるから、場合によって使い分けてほしいな！
 
-## 目次
-
 ## useState
 
 class でいう State を使える奴
