@@ -1,53 +1,18 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  useMemo,
-  useRef
-} from 'react'
+import React from 'react'
+import Count from './components/count'
+import { ReducerComponent } from './components/reducer'
 
-type Props = {
-  initial: number
+const InitialState = {
+  initial: 0 as number
 }
 
-export const testContext = React.createContext({ context: 'contextdayo~' })
-
-export default ({ initial = 0 }: Props) => {
-  const [count, setCount] = useState(initial)
-  const [num, setNum] = useState(1)
-  const { context } = useContext(testContext)
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    console.log(context)
-
-    return () => console.log('willunmount(副作用時にも発火)')
-  }, [context])
-
-  // めっちゃ高価な計算
-  const dec_num_1: number = useMemo(() => num - 1, [num])
-
-  const increment = useCallback(() => setCount(count => count + num), [num])
-  const decrement = useCallback(() => setCount(count => count - num), [num])
-  const increment_num = useCallback(() => setNum(num => num + 1), [])
-  const decrement_num = useCallback(() => setNum(dec_num_1), [dec_num_1])
-
-  const focus_input = useCallback(() => {
-    if (inputRef && inputRef.current) {
-      inputRef.current.focus()
-    }
-  }, [])
-
+export default () => {
   return (
-    <>
-      {count}
-      <button onClick={increment}>+{num}</button>
-      <button onClick={decrement}>-{num}</button>
-      <button onClick={increment_num}>{num + 1}づつ変わるようになるよ</button>
-      <button onClick={decrement_num}>{num - 1}づつ変わるようになるよ</button>
-      <button onClick={focus_input}>focus_input</button>
-      <input ref={inputRef} type="text" />
-    </>
+    <div>
+      <Count initial={InitialState.initial} />
+      <br />
+      <br />
+      <ReducerComponent />
+    </div>
   )
 }
