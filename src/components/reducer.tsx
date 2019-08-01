@@ -6,7 +6,7 @@ type ActionType = {
   type: 'reset' | 'decrement' | 'increment'
 }
 
-const reducer = (state: any, action: ActionType) => {
+const reducer = (state = initialState, action: ActionType) => {
   switch (action.type) {
     case 'reset':
       return initialState
