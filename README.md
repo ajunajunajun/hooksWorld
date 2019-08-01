@@ -3,8 +3,10 @@ hooks 使うよ～
 # React Hooks
 
 前提として react の知識があるといいね！  
-Hooks は React の version16.8.0 (2019/02/06) で追加されたよ～  
-https://ja.reactjs.org/docs/hooks-reference.html#useref
+Hooks は React の version16.8.0 (2019/02/06) で追加されたよ～
+新しい技術ってだけでわくわくするね！！  
+https://ja.reactjs.org/docs/hooks-reference.html
+似た Hooks を並べてるから、場合によって使い分けてほしいな！
 
 import 文とか省いていくよ！
 
@@ -26,7 +28,7 @@ boolean 型とか string 型とか 配列とか、なんでも入るよ！
 
 ## useReducer
 
-redux みたいに状態管理できる奴  
+redux みたいに state 管理できる奴  
 これも useState みたく state が使える奴なんだけど、  
 コードが複雑になってきたらこっち使った方が分かりやすい！
 
@@ -64,13 +66,16 @@ class でいう <Context.Consumer> を使える奴
 例:
 
 ```
-const testContext = React.createContext({ context: 'contextdayo~' })
+export const testContext = React.createContext({ context: 'contextdayo~' })
+```
 
+```
 const ContextComponent = () => {
   const { context } = useContext(testContext)
 
   // 'contextdayo~'
   return console.log(context)
+}
 ```
 
 `React.createContext`で作られた context を持ってこれるよ！
@@ -83,7 +88,7 @@ class でいう LifeCycle を使える奴
 
 ```
 useEffect(() => {
-console.log('a')
+  console.log('a')
   return () => console.log('b')
 }, [])
 ```
@@ -95,7 +100,7 @@ console.log('a')
 
 ```
 useEffect(() => {
-console.log('a')
+  console.log('a')
   return () => console.log('b')
 }, [flag])
 ```
@@ -123,7 +128,6 @@ useLayoutEffect は描画止めるからその心配が無いよ！
 ```
 useEffect(() => {
   console.log('a')
-
   return () => console.log('b')
 }, [flag])
 
@@ -131,6 +135,8 @@ useLayoutEffect(() => {
   console.log('c')
 }, [flag])
 ```
+
+useEffect と useLayoutEffect を並べると先に useLayoutEffect が処理されるよ～
 
 `('c')` -> `('a')` -> `flag`変化 -> `('b')` -> `('c')` -> `('a')` ってかんじ！！
 
@@ -215,6 +221,46 @@ return (
 
 ## useImperativeHandle
 
-## useDebugValue
+ref が使われた時に親コンポーネントに渡されるインスタンス値をカスタマイズ出来るよ！
+
+なんでかは知らないけど、  
+ref を使った手続き的なコードはほとんどの場合に避けるべきです。  
+らしい～
+
+example:
+
+```
+const MyInput = (props, ref) => {
+  const myInputRef = useRef()
+  useImperativeHandle(ref, () => ({
+    setWaaaai() {
+      myInputRef.current.value = 'Waaaaai'
+    }
+  }))
+
+  return <input type="text" ref={myInputRef} />
+}
+
+export default forwardRef(MyInput)
+```
+
+```
+const inputRef = useRef()
+
+<MyInput ref={inputRef} />
+<button
+  onClick={() => { inputRef.current.setWaaaai() }}
+>
+  Waaaai
+</button>
+```
+
+子供の MyInput で作った setWaaaai()を親で使える感じ、ふ～ん
 
 ## custom hooks
+
+規則に合わせて自分で Hooks を作れるよ
+
+## useDebugValue
+
+ReactDevTools で CustomHooks のラベルを表示できるよ
