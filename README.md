@@ -67,10 +67,10 @@ class でいう <Context.Consumer> を使える奴
 const testContext = React.createContext({ context: 'contextdayo~' })
 
 const ContextComponent = () => {
-    const { context } = useContext(testContext)
+  const { context } = useContext(testContext)
 
-    // 'contextdayo~'
-    return console.log(context)
+  // 'contextdayo~'
+  return console.log(context)
 ```
 
 `React.createContext`で作られた context を持ってこれるよ！
@@ -84,7 +84,7 @@ class でいう LifeCycle を使える奴
 ```
 useEffect(() => {
 console.log('a')
-    return () => console.log('b')
+  return () => console.log('b')
 }, [])
 ```
 
@@ -96,7 +96,7 @@ console.log('a')
 ```
 useEffect(() => {
 console.log('a')
-    return () => console.log('b')
+  return () => console.log('b')
 }, [flag])
 ```
 
@@ -121,15 +121,15 @@ useLayoutEffect は描画止めるからその心配が無いよ！
 例:
 
 ```
-  useEffect(() => {
-    console.log('a')
+useEffect(() => {
+  console.log('a')
 
-    return () => console.log('b')
-  }, [flag])
+  return () => console.log('b')
+}, [flag])
 
-  useLayoutEffect(() => {
-    console.log('c')
-  }, [flag])
+useLayoutEffect(() => {
+  console.log('c')
+}, [flag])
 ```
 
 `('c')` -> `('a')` -> `flag`変化 -> `('b')` -> `('c')` -> `('a')` ってかんじ！！
@@ -196,12 +196,12 @@ useMemo 自体の処理の方が重いからね！
 const inputRef = useRef(null)
 
 const focus_input = () => {
-    inputRef.current.focus()
+  inputRef.current.focus()
 }
 
 return (
-    <button onClick={focus_input}>focus_input</button>
-    <input ref={inputRef} type="text" />
+  <button onClick={focus_input}>focus_input</button>
+  <input ref={inputRef} type="text" />
 )
 ```
 
