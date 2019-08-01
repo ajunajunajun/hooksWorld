@@ -12,7 +12,7 @@ import 文とか省いていくよ！
 
 class でいう State を使える奴
 
-example:
+例:
 
 ```
 const [count, setCount] = useState(0)
@@ -30,7 +30,7 @@ redux みたいに状態管理できる奴
 これも useState みたく state が使える奴なんだけど、  
 コードが複雑になってきたらこっち使った方が分かりやすい！
 
-example:
+例:
 
 ```
 const reducer = (state, action) => {
@@ -61,7 +61,7 @@ redux もういらない？って思ったけど middleware 無いから非同�
 
 class でいう <Context.Consumer> を使える奴
 
-example:
+例:
 
 ```
 const testContext = React.createContext({ context: 'contextdayo~' })
@@ -79,7 +79,7 @@ const ContextComponent = () => {
 
 class でいう LifeCycle を使える奴
 
-example1:
+例 1:
 
 ```
 useEffect(() => {
@@ -91,7 +91,7 @@ console.log('a')
 `console.log('a')`の位置が componentDidMount  
 `console.log('b')`の位置が componentWillUnMount
 
-example2:
+例 2:
 
 ```
 useEffect(() => {
@@ -118,7 +118,7 @@ useEffect は描画を止めないで処理するから、
 一瞬処理できてない物が写る可能性あるんだけど、  
 useLayoutEffect は描画止めるからその心配が無いよ！
 
-example:
+例:
 
 ```
   useEffect(() => {
@@ -139,7 +139,7 @@ example:
 PureComponent 的な奴  
 関数を保存するよ！
 
-example1:
+例 1:
 
 ```
 const increment = useCallback(() => setCount(count => count + 1), [])
@@ -150,7 +150,7 @@ return <button onClick={increment}>+1</button>
 再レンダリングのたびに、新しい関数が作られるのを防げて、  
 パフォーマンスが向上するよ！
 
-example2:
+例 2:
 
 ```
 const increment = useCallback(() => setCount(count => count + num), [num])
@@ -159,7 +159,7 @@ return <button onClick={increment}>+1</button>
 ```
 
 第二引数の配列の中に値入れておくと、その値が変わるたびに関数を作り直すよ！  
-example では`1`を変数にしておいて、後から増加分を変えれる様にしてる！
+例 では`1`を変数にしておいて、後から増加分を変えれる様にしてる！
 
 毎回更新されるような書き方だと逆にパフォーマンス落ちるよ！！  
 useCallback 自体の処理の方が重いからね！
@@ -170,7 +170,7 @@ useCallback 自体の処理の方が重いからね！
 useCallback は関数を保存するんだけど、  
 useMemo は関数の結果を保存するよ！前回と違ったら更新！
 
-example:
+例:
 
 ```
 // めっちゃ高価な計算
@@ -190,7 +190,7 @@ useMemo 自体の処理の方が重いからね！
 コンポーネントの存在期間ずっと生存し続ける！！  
 代入しても state 変えるわけじゃないから再描画されない！
 
-example:
+例:
 
 ```
 const inputRef = useRef(null)
