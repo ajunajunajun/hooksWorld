@@ -12,9 +12,9 @@ type Props = {
   initial: number
 }
 
-export const testContext = React.createContext({ context: 'contextdayo~' })
+const testContext = React.createContext({ context: 'contextdayo~' })
 
-export const Count = ({ initial = 0 }: Props) => {
+const Count = ({ initial = 0 }: Props) => {
   const [count, setCount] = useState(initial)
   const [num, setNum] = useState(1)
   const { context } = useContext(testContext)

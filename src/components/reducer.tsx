@@ -19,7 +19,7 @@ const reducer = (state = initialState, action: ActionType) => {
   }
 }
 
-export const ReducerComponent = () => {
+const ReducerComponent = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
   return (
     <>
