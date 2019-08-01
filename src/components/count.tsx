@@ -27,7 +27,7 @@ export const Count = ({ initial = 0 }: Props) => {
   }, [context])
 
   useLayoutEffect(() => {
-    console.log('描画とめるからこっち先処理')
+    console.log('描画とめるからuseLayoutEffect先処理')
   }, [])
 
   // めっちゃ高価な計算
