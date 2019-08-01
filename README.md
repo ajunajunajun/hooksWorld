@@ -6,6 +6,8 @@ hooks 使うよ～
 Hooks は React の version16.8.0 (2019/02/06) で追加されたよ～  
 https://ja.reactjs.org/docs/hooks-reference.html#useref
 
+import 文とか省いていくよ！
+
 ## useState
 
 class でいう State を使える奴
@@ -67,7 +69,9 @@ example:
 export const testContext = React.createContext({ context: 'contextdayo~' })
 
 const { context } = useContext(testContext)
-console.log(context) // 'contextdayo~'
+
+// 'contextdayo~'
+return console.log(context)
 ```
 
 `React.createContext`で作られた context を持ってこれるよ！
@@ -113,7 +117,9 @@ example:
 ```
 // めっちゃ高価な計算
 const dec_num_1 = useMemo(() => num - 1, [num])
-console.log(dec_num_1)
+
+// num - 1
+return console.log(dec_num_1)
 ```
 
 重たい計算があって、再レンダリングの度に繰り返したくないなら使おう！！  
@@ -126,6 +132,8 @@ useMemo 自体の処理の方が重いからね！
 コンポーネントの存在期間ずっと生存し続ける！！  
 代入しても state 変えるわけじゃないから再描画されない！
 
+example:
+
 ```
 const inputRef = useRef(null)
 
@@ -133,8 +141,10 @@ const focus_input = () => {
     inputRef.current.focus()
 }
 
-<button onClick={focus_input}>focus_input</button>
-<input ref={inputRef} type="text" />
+return (
+    <button onClick={focus_input}>focus_input</button>
+    <input ref={inputRef} type="text" />
+)
 ```
 
 `useRef()`の()内で初期値（ここでは null)設定して  
@@ -146,6 +156,45 @@ const focus_input = () => {
 色んな使い道がありそうだ～
 
 ## useReducer
+
+redux みたいに状態管理できる奴
+
+example:
+
+```
+const initialState = { count: 0 }
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'reset':
+      return initialState
+    case 'increment':
+      return { count: state.count + 1 }
+    case 'decrement':
+      return { count: state.count - 1 }
+    default:
+      return state
+  }
+}
+
+export const ReducerComponent = () => {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>
+      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+    </>
+  )
+}
+```
+
+`useReducer(reducer,initialState)`で、  
+state,dispatch を定義して使えるようにしてる！
+
+`dispatch({ type:'reset' })`とかで、  
+reducer 内の action.type を指定して状態を弄ることが出来る～
 
 ## useImperativeHandle
 
