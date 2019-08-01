@@ -1,4 +1,5 @@
-hooks 使うよ～
+hooks 使うよ～  
+`npm install && npm start`
 
 # React Hooks
 
